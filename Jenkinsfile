@@ -6,7 +6,7 @@ pipeline {
     stages{
         stage('Build Maven'){
             steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Java-Techie-jt/devops-automation']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/EffectiveCoder123/bookstore']]])
                 sh 'mvn clean install'
             }
         }
@@ -23,17 +23,17 @@ pipeline {
                    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
                    sh 'docker login -u juliebuddi9 -p ${dockerhubpwd}'
 
-}
+                   }
                    sh 'docker push juliebuddi9/catalog-service'
                 }
             }
         }
-        stage('Deploy to k8s'){
+     /*  stage('Deploy to k8s'){
             steps{
                 script{
                     kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
                 }
             }
-        }
+        }*/
     }
 }
